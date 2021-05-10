@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();    
 const gravatar = require('gravatar');
+const jwt = require('jsonwebtoken');
 
 const bcrypt = require('bcryptjs');
 
@@ -66,8 +67,21 @@ router.post('/login', (req,res) => {
         //  check for user
         if(!user)
         {
-            res.status(404).res.json({email: 'User not found'});
+            res.status(404).json({email: 'User not found'});
         }
+
+        bcrypt.compare(password, user.password)
+        .then(isMatch => {
+            if(isMatch){
+            // user matched
+
+            // sign token
+            }
+            else {
+                return res.status(400).json({password: 'password error'});
+            }
+        })
+      
     })
 });
 
